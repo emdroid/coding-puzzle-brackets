@@ -1,0 +1,19 @@
+##
+# @file
+#
+# Travis CI script for the Brackets coding puzzle
+#
+# @author Emil Maskovsky
+#
+
+language: cpp
+compiler:
+  - gcc
+  - clang
+script: make && make test
+
+notifications:
+  email:
+    recipients: emil.maskovsky@gmail.com
+    on_success: change
+    on_failure: always

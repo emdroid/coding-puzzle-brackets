@@ -1,6 +1,8 @@
 Brackets coding puzzle
 ======================
 
+[![Build Status](https://travis-ci.org/emaskovsky/coding-puzzle-brackets.svg?branch=master)](https://travis-ci.org/emaskovsky/coding-puzzle-brackets)
+
 Given a string comprising just the characters (,),{,},[,] determine if
 it is well-formed or not by applying the following rules:
 * **Each type of bracket needs to be first opened then closed**
