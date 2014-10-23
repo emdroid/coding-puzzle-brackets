@@ -43,3 +43,19 @@ input like this (no spaces):
 
 0:True 
 1:False
+
+
+Usage
+=====
+
+Linux
+-----
+To build under Linux, invoke the following command in the root directory:
+```
+make all
+```
+
+To run the test, invoke:
+```
+make test
+```
