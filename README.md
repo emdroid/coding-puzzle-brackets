@@ -61,3 +61,8 @@ To run the test, invoke:
 ```
 make test
 ```
+
+Windows
+-------
+The project for [Microsoft Visual Studio 2013](http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx "Microsoft Visual Studio Express")
+is available under the "extras/msvc" directory.

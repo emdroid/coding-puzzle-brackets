@@ -1,2 +1,7 @@
 *.o
 *.exe
+*.sdf
+*.opensdf
+*.suo
+[Dd]ebug*/
+[Rr]elease*/
