@@ -72,5 +72,8 @@ $(TEST_TARGET): $(OBJS) $(OBJS_TEST)
 #    Dependencies    #
 ######################
 
+# rebuild everything if the makefile changes (e.g. flags etc.)
+$(OBJS) $(OBJS_TARGET) $(OBJS_TEST): makefile
+
 
 # EOF
