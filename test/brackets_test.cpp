@@ -12,6 +12,9 @@
 
 int main()
 {
+    std::cout << "Running the [Bracket processor] unit test" << std::endl
+              << "=========================================" << std::endl;
+
     return EXIT_SUCCESS;
 }
 
