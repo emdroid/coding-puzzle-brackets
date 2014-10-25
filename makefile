@@ -19,7 +19,8 @@ OBJS = \
 	$(TARGET).o
 
 # optimization and debugging settings
-OPTFLAGS = -g -o2
+OPTFLAGS = -g -O0 -fno-inline
+#OPTFLAGS = -O2 -DNDEBUG
 
 # the compiler flags
 CPPFLAGS = $(OPTFLAGS) -Wall -Wextra -Werror
