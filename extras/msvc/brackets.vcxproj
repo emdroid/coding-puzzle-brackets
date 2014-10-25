@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>../../inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -69,6 +70,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>../../inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,6 +81,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\brackets.cpp" />
+    <ClCompile Include="..\..\src\StandardProcessor.cpp" />
+    <ClCompile Include="..\..\src\StandardValidator.cpp" />
+    <ClCompile Include="..\..\src\StreamInputReader.cpp" />
+    <ClCompile Include="..\..\src\StreamOutputWriter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\BracketPuzzle\IInputReader.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\IOutputWriter.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\IProcessor.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\IValidator.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\NonAssignable.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\StandardProcessor.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\StandardValidator.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\StreamInputReader.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\StreamOutputWriter.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

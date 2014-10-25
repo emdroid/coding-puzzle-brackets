@@ -17,7 +17,11 @@ TARGET = brackets
 TEST_TARGET = $(TARGET)_test
 
 # the object files
-OBJS =
+OBJS = \
+	StandardValidator.o \
+	StreamInputReader.o \
+	StreamOutputWriter.o \
+	StringProcessor.o
 
 # the main executable object files
 OBJS_TARGET = \
@@ -32,7 +36,7 @@ OPTFLAGS = -g -O0 -fno-inline
 #OPTFLAGS = -O2 -DNDEBUG
 
 # the compiler flags
-CPPFLAGS = $(OPTFLAGS) -Wall -Wextra -Werror
+CPPFLAGS = $(OPTFLAGS) -Wall -Wextra -Werror -I inc
 
 # the linker flags
 LDFLAGS = $(OPTFLAGS)
