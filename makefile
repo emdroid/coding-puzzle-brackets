@@ -49,7 +49,7 @@ cleanall: clean
 	-rm -f $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(LNKFLAGS) -o $@ $^
+	$(CXX) $(LDFLAGS) -o $@ $^
 
 .cpp.o:
 	$(CXX) -c $(CPPFLAGS) -o $@ $<
