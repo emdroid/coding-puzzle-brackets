@@ -5,3 +5,5 @@
 *.suo
 [Dd]ebug*/
 [Rr]elease*/
+doc/*/
+*.log
