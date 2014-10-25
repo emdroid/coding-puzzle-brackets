@@ -1,7 +1,7 @@
 /**
     @file
 
-    Brackets coding puzzle - Part 1.
+    Brackets processor unit test test.
 
     @author Emil Maskovsky
 */

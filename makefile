@@ -14,9 +14,18 @@
 # the main executable target
 TARGET = brackets
 
+TEST_TARGET = $(TARGET)_test
+
 # the object files
-OBJS = \
+OBJS =
+
+# the main executable object files
+OBJS_TARGET = \
 	$(TARGET).o
+
+# the test executable object files
+OBJS_TEST = $(OBJS) \
+	$(TEST_TARGET).o
 
 # optimization and debugging settings
 OPTFLAGS = -g -O0 -fno-inline
@@ -29,7 +38,7 @@ CPPFLAGS = $(OPTFLAGS) -Wall -Wextra -Werror
 LDFLAGS = $(OPTFLAGS)
 
 # the source file paths
-VPATH = src
+VPATH = src:test
 
 
 #####################
@@ -40,16 +49,19 @@ VPATH = src
 
 all: $(TARGET)
 
-test: all
-	./$(TARGET)
+test: all $(TEST_TARGET)
+	./$(TEST_TARGET)
 
 clean:
-	-rm -f $(OBJS)
+	-rm -f $(OBJS) $(OBJS_TARGET) $(OBJS_TEST) $(TEST_TARGET)
 
 cleanall: clean
 	-rm -f $(TARGET)
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(OBJS_TARGET)
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+$(TEST_TARGET): $(OBJS) $(OBJS_TEST)
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 .cpp.o:
