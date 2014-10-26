@@ -36,7 +36,7 @@ OPTFLAGS = -g -O0 -fno-inline
 #OPTFLAGS = -O2 -DNDEBUG
 
 # the compiler flags
-CPPFLAGS = $(OPTFLAGS) -Wall -Wextra -Werror -I inc
+CPPFLAGS = $(OPTFLAGS) -std=c++11 -Wall -Wextra -Werror -I inc
 
 # the linker flags
 LDFLAGS = $(OPTFLAGS)
