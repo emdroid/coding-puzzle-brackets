@@ -21,7 +21,7 @@ OBJS = \
 	StandardValidator.o \
 	StreamInputReader.o \
 	StreamOutputWriter.o \
-	StringProcessor.o
+	StandardProcessor.o
 
 # the main executable object files
 OBJS_TARGET = \
@@ -57,7 +57,7 @@ test: all $(TEST_TARGET)
 	./$(TEST_TARGET)
 
 clean:
-	-rm -f $(OBJS) $(OBJS_TARGET) $(OBJS_TEST) $(TEST_TARGET)
+	-rm -f $(OBJS) $(OBJS_TARGET) $(OBJS_TEST) $(OBJS:.o=.d) $(OBJS_TARGET:.o=.d) $(OBJS_TEST:.o=.d) $(TEST_TARGET)
 
 cleanall: clean
 	-rm -f $(TARGET)
@@ -76,8 +76,20 @@ $(TEST_TARGET): $(OBJS) $(OBJS_TEST)
 #    Dependencies    #
 ######################
 
-# rebuild everything if the makefile changes (e.g. flags etc.)
-$(OBJS) $(OBJS_TARGET) $(OBJS_TEST): makefile
+# autogenerate dependencies
+
+.SUFFIXES: .d
+
+.cpp.d:
+	$(CXX) -MM -MP $(CPPFLAGS) -MT $@ -MT $(@:.d=.o) -o $@ $<
+
+-include $(OBJS:.o=.d) $(OBJS_TARGET:.o=.d) $(OBJS_TEST:.o=.d)
+
+
+# rebuild everything if the makefile changes (e.g. flags change)
+
+$(OBJS) $(OBJS_TARGET) $(OBJS_TEST) $(OBJS:.o=.d) $(OBJS_TARGET:.o=.d) $(OBJS_TEST:.o=.d): \
+	makefile
 
 
 # EOF
