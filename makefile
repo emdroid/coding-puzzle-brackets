@@ -21,7 +21,9 @@ OBJS = \
 	StandardValidator.o \
 	StreamInputReader.o \
 	StreamOutputWriter.o \
-	StandardProcessor.o
+	StandardProcessor.o \
+	VectorInputReader.o \
+	VectorOutputWriter.o
 
 # the main executable object files
 OBJS_TARGET = \
@@ -36,7 +38,7 @@ OPTFLAGS = -g -O0 -fno-inline
 #OPTFLAGS = -O2 -DNDEBUG
 
 # the compiler flags
-CPPFLAGS = $(OPTFLAGS) -std=c++11 -Wall -Wextra -Werror -I inc
+CPPFLAGS = $(OPTFLAGS) -std=c++0x -Wall -Wextra -Werror -I inc
 
 # the linker flags
 LDFLAGS = $(OPTFLAGS)

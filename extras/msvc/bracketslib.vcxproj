@@ -84,12 +84,16 @@
     <ClInclude Include="..\..\inc\BracketPuzzle\StandardValidator.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\StreamInputReader.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\StreamOutputWriter.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\VectorInputReader.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\VectorOutputWriter.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\StandardProcessor.cpp" />
     <ClCompile Include="..\..\src\StandardValidator.cpp" />
     <ClCompile Include="..\..\src\StreamInputReader.cpp" />
     <ClCompile Include="..\..\src\StreamOutputWriter.cpp" />
+    <ClCompile Include="..\..\src\VectorInputReader.cpp" />
+    <ClCompile Include="..\..\src\VectorOutputWriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
