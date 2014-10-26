@@ -66,3 +66,25 @@ Windows
 -------
 The project for [Microsoft Visual Studio 2013](http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx "Microsoft Visual Studio Express")
 is available under the "extras/msvc" directory.
+
+
+Running the application
+-----------------------
+The application is run by calling:
+```
+brackets
+```
+(under Linux/Unix, you might need to specify the path of current directory, like
+"./brackets")
+
+After starting the application, enter the input lines (use Enter to terminate
+a single line). To start processing the entered lines, press Ctrl+Z, Enter
+to finish receiving the input and start processing the lines.
+
+The input can also be redirected to receive the lines from a file:
+```
+brackets < input.txt
+```
+All the lines in the input file will be loaded and then processed. Note that
+there needs to be a newline after the last line, otherwise the last line will
+not be processed.

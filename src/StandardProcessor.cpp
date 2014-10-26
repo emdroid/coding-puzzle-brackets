@@ -6,6 +6,9 @@
     @author Emil Maskovsky
 */
 
+// standard library
+#include <vector>
+
 // BracketPuzzle
 #include "BracketPuzzle/StandardProcessor.hpp"
 #include "BracketPuzzle/IValidator.hpp"
@@ -24,10 +27,17 @@ bool StandardProcessor::execute(
 {
     bool ok = true;
     std::string line;
-    while (ok && reader.readLine(line))
+    std::vector< std::string > lines;
+    while (reader.readLine(line))
+    {
+        lines.push_back(line);
+    }
+    for (std::vector< std::string >::const_iterator it = lines.begin();
+         it != lines.end() && ok;
+         ++it)
     {
         ok = writer.writeLine(
-            validator.validate(line)
+            validator.validate(*it)
             ? "True"
             : "False");
     }

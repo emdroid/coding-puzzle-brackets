@@ -26,7 +26,7 @@ bool StreamInputReader::readLine(
     std::string & str) const
 {
     std::getline(m_in, str);
-    return true;
+    return m_in.good();
 }
 
 

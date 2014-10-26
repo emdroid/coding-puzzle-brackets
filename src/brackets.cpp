@@ -25,12 +25,11 @@ int main()
 
     try
     {
-        StandardProcessor processor;
-
         StandardValidator validator;
         StreamInputReader reader(std::cin);
         StreamOutputWriter writer(std::cout);
 
+        StandardProcessor processor;
         if (!processor.execute(validator, reader, writer))
         {
             result = EXIT_FAILURE;
