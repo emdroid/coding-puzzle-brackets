@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\client\brackets.cpp">
+    <ClCompile Include="..\..\client\brackets_mt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

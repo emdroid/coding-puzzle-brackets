@@ -1,7 +1,7 @@
 /**
     @file
 
-    Brackets coding puzzle - Part 1.
+    Brackets coding puzzle - Part 1 (single threaded processing).
 
     @author Emil Maskovsky
 */

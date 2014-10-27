@@ -35,6 +35,13 @@ class IState
 public:
 
     /**
+        Destructor.
+    */
+    virtual ~IState()
+    {
+    }
+
+    /**
         Get next open state according to the character @p c.
 
         @param [in] c The next character.
