@@ -11,13 +11,16 @@
 #include <iostream>
 #include <algorithm>
 #include <sstream>
+#include <memory>
 
 // BracketPuzzle
 #include "BracketPuzzle/StandardProcessor.hpp"
 #include "BracketPuzzle/MultithreadProcessor.hpp"
 #include "BracketPuzzle/StandardValidator.hpp"
 #include "BracketPuzzle/VectorInputReader.hpp"
-#include "BracketPuzzle/VectorOutputWriter.hpp"
+#include "BracketPuzzle/VectorResultWriter.hpp"
+#include "BracketPuzzle/StandardResult.hpp"
+#include "BracketPuzzle/MultithreadResult.hpp"
 using namespace BracketPuzzle;
 
 
@@ -38,7 +41,7 @@ public:
 
     virtual bool check(
         const std::vector< TaskSetup > & tasks,
-        const std::vector< std::string > & results) const = 0;
+        const VectorResultWriter::ValuesType & results) const = 0;
 
 };
 
@@ -53,19 +56,18 @@ public:
 
     bool check(
         const std::vector< TaskSetup > & tasks,
-        const std::vector< std::string > & results) const
+        const VectorResultWriter::ValuesType & results) const
     {
         bool ok = true;
         for (size_t i = 0; i < tasks.size() && i < results.size(); ++i)
         {
-            const std::string & expected
-                = getResultString(tasks[i].second);
-            if (expected != results[i])
+            const StandardResult expected(tasks[i].second);
+            if (!expected.isEqual(*results[i]))
             {
                 std::cerr << "Test failure: Input: \""
                           << tasks[i].first
                           << "\", expected: \"" << expected
-                          << "\", received: \"" << results[i] << "\""
+                          << "\", received: \"" << *results[i] << "\""
                           << std::endl;
                 ok = false;
             }
@@ -84,14 +86,13 @@ public:
         return ok;
     }
 
-private:
-
-    static std::string getResultString(const bool value)
-    {
-        return value ? "True" : "False";
-    }
-
 };
+
+
+bool ConstResultPtrLesserThan(ConstResultPtr left, ConstResultPtr right)
+{
+    return *left < *right;
+}
 
 
 class MultithreadResultValidator
@@ -104,25 +105,27 @@ public:
 
     bool check(
         const std::vector< TaskSetup > & tasks,
-        const std::vector< std::string > & results) const
+        const VectorResultWriter::ValuesType & results) const
     {
         bool ok = true;
         // need to sort the results first - can come out of order
         // from different threads
-        std::vector< std::string > sortedResults = results;
-        std::sort(sortedResults.begin(), sortedResults.end());
+        VectorResultWriter::ValuesType sortedResults = results;
+        std::sort(
+            sortedResults.begin(),
+            sortedResults.end(),
+            ConstResultPtrLesserThan);
         for (size_t i = 0;
              i < tasks.size() && i < sortedResults.size();
              ++i)
         {
-            const std::string & expected
-                = getResultString(i, tasks[i].second);
-            if (expected != sortedResults[i])
+            const MultithreadResult expected(i, tasks[i].second);
+            if (!expected.isEqual(*sortedResults[i]))
             {
                 std::cerr << "Test failure: Input: \""
                           << tasks[i].first
                           << "\", expected: \"" << expected
-                          << "\", received: \"" << sortedResults[i] << "\""
+                          << "\", received: \"" << *sortedResults[i] << "\""
                           << std::endl;
                 ok = false;
             }
@@ -139,15 +142,6 @@ public:
             ok = false;
         }
         return ok;
-    }
-
-private:
-
-    static std::string getResultString(const size_t idx, const bool value)
-    {
-        std::ostringstream result;
-        result << idx << ':' << (value ? "True" : "False");
-        return result.str();
     }
 
 };
@@ -175,7 +169,7 @@ public:
     }
 
     bool check(
-        const VectorOutputWriter & writer,
+        const VectorResultWriter & writer,
         const IResultValidator & resultValidator)
     {
         return resultValidator.check(m_tasks, writer.getData());
@@ -224,7 +218,7 @@ bool testProcessing(
 
     StandardValidator validator;
     VectorInputReader reader;
-    VectorOutputWriter writer;
+    VectorResultWriter writer;
 
     setup.configure(reader);
     processor.execute(validator, reader, writer);

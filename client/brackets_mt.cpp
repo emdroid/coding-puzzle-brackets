@@ -14,7 +14,7 @@
 #include "BracketPuzzle/MultithreadProcessor.hpp"
 #include "BracketPuzzle/StandardValidator.hpp"
 #include "BracketPuzzle/StreamInputReader.hpp"
-#include "BracketPuzzle/StreamOutputWriter.hpp"
+#include "BracketPuzzle/StreamResultWriter.hpp"
 
 
 int main()
@@ -27,7 +27,7 @@ int main()
     {
         StandardValidator validator;
         StreamInputReader reader(std::cin);
-        StreamOutputWriter writer(std::cout);
+        StreamResultWriter writer(std::cout);
 
         MultithreadProcessor processor;
         if (!processor.execute(validator, reader, writer))

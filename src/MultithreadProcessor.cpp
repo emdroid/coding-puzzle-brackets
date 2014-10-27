@@ -14,7 +14,8 @@
 #include "BracketPuzzle/MultithreadProcessor.hpp"
 #include "BracketPuzzle/IValidator.hpp"
 #include "BracketPuzzle/IInputReader.hpp"
-#include "BracketPuzzle/IOutputWriter.hpp"
+#include "BracketPuzzle/IResultWriter.hpp"
+#include "BracketPuzzle/MultithreadResult.hpp"
 
 
 namespace BracketPuzzle
@@ -24,7 +25,7 @@ namespace BracketPuzzle
 bool MultithreadProcessor::execute(
     const IValidator & validator,
     const IInputReader & reader,
-    IOutputWriter & writer) const
+    IResultWriter & writer) const
 {
     bool ok = true;
     std::string line;
@@ -38,10 +39,8 @@ bool MultithreadProcessor::execute(
          it != lines.end() && ok;
          ++it, ++iLine)
     {
-        std::ostringstream result;
-        result << iLine << ':'
-               << (validator.validate(*it) ? "True" : "False");
-        ok = writer.writeLine(result.str());
+        ok = writer.writeResult(
+            MultithreadResult(iLine, validator.validate(*it)));
     }
     return ok;
 }

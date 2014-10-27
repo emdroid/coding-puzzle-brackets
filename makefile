@@ -24,11 +24,14 @@ TEST_TARGET = $(TARGET)_test
 OBJS = \
 	StandardValidator.o \
 	StreamInputReader.o \
-	StreamOutputWriter.o \
+	StreamResultWriter.o \
 	StandardProcessor.o \
 	VectorInputReader.o \
-	VectorOutputWriter.o \
-	MultithreadProcessor.o
+	VectorResultWriter.o \
+	MultithreadProcessor.o \
+	IResult.o \
+	StandardResult.o \
+	MultithreadResult.o
 
 # the single threaded executable object files
 OBJS_TARGET = \
@@ -47,7 +50,7 @@ OPTFLAGS = -g -O0 -fno-inline
 #OPTFLAGS = -O2 -DNDEBUG
 
 # the compiler flags
-CPPFLAGS = $(OPTFLAGS) -std=c++0x -Wall -Wextra -Werror -I inc
+CPPFLAGS = $(OPTFLAGS) -std=c++0x -Wall -Wextra -Werror -I inc -I src
 
 # the linker flags
 LDFLAGS = $(OPTFLAGS)

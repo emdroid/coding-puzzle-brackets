@@ -32,7 +32,7 @@ public:
     bool execute(
         const IValidator & validator,
         const IInputReader & reader,
-        IOutputWriter & writer) const;
+        IResultWriter & writer) const;
 
 }; // class StandardProcessor
 
