@@ -10,11 +10,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "brackets_test", "brackets_test.vcxproj", "{816928EC-D21A-4527-8C70-0F10DD83C68E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{37A5E24A-9041-4AAD-ABF0-D092C7101D50} = {37A5E24A-9041-4AAD-ABF0-D092C7101D50}
+		{11132DA6-655A-48AC-9411-87605E43D2C8} = {11132DA6-655A-48AC-9411-87605E43D2C8}
+		{4BDD35F8-7706-4491-AB4D-B208349BA6B2} = {4BDD35F8-7706-4491-AB4D-B208349BA6B2}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bracketslib", "bracketslib.vcxproj", "{37A5E24A-9041-4AAD-ABF0-D092C7101D50}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "brackets_mt", "brackets_mt.vcxproj", "{11132DA6-655A-48AC-9411-87605E43D2C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{37A5E24A-9041-4AAD-ABF0-D092C7101D50} = {37A5E24A-9041-4AAD-ABF0-D092C7101D50}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
