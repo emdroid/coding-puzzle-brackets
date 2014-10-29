@@ -11,6 +11,7 @@
 
 // standard library
 #include <vector>
+#include <mutex>
 
 // BracketPuzzle
 #include "BracketPuzzle/IResultWriter.hpp"
@@ -40,6 +41,9 @@ private:
 
     /** The output data. */
     ValuesType m_data;
+
+    /** Mutex lock of the data. */
+    std::mutex m_lock;
 
 }; // class VectorResultWriter
 

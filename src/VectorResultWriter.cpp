@@ -25,7 +25,12 @@ const VectorResultWriter::ValuesType & VectorResultWriter::getData() const
 bool VectorResultWriter::writeResult(
     const IResult & result)
 {
-    m_data.push_back(result.clone());
+    // clone the result (the original one might be destroyed after
+    // returning from this method)
+    ResultPtr duplicate = result.clone();
+    // need to guard by lock for thread-safe writes
+    std::lock_guard< std::mutex > guard(m_lock);
+    m_data.push_back(duplicate);
     return true;
 }
 

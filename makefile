@@ -29,6 +29,7 @@ OBJS = \
 	VectorInputReader.o \
 	VectorResultWriter.o \
 	MultithreadProcessor.o \
+	MultithreadTask.o \
 	IResult.o \
 	StandardResult.o \
 	MultithreadResult.o
@@ -43,7 +44,8 @@ OBJS_TARGET_MT = \
 
 # libraries linked within the executables
 LIBS = \
-	-lboost_thread-mt
+	-lboost_thread-mt \
+	-lboost_system-mt
 
 # the unit test executable object files
 OBJS_TEST = $(OBJS) \

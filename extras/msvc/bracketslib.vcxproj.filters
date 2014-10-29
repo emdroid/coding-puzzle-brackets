@@ -57,6 +57,9 @@
     <ClInclude Include="..\..\inc\BracketPuzzle\IResult.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\BracketPuzzle\MultithreadTask.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\StandardProcessor.cpp">
@@ -87,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\IResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MultithreadTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

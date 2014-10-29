@@ -92,6 +92,11 @@ brackets
 (under Linux/Unix, you might need to specify the path of current directory, like
 "./brackets")
 
+The command to run the multi threaded version of the application is:
+```
+brackets_mt
+```
+
 After starting the application, enter the input lines (use Enter to terminate
 a single line). To start processing the entered lines, press Ctrl+Z, Enter
 to finish receiving the input and start processing the lines.

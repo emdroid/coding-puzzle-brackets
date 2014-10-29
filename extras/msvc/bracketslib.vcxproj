@@ -95,12 +95,14 @@
     <ClInclude Include="..\..\inc\BracketPuzzle\VectorInputReader.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\VectorResultWriter.hpp" />
     <ClInclude Include="..\..\src\BracketPuzzle\MultithreadResult.hpp" />
+    <ClInclude Include="..\..\src\BracketPuzzle\MultithreadTask.hpp" />
     <ClInclude Include="..\..\src\BracketPuzzle\StandardResult.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\IResult.cpp" />
     <ClCompile Include="..\..\src\MultithreadProcessor.cpp" />
     <ClCompile Include="..\..\src\MultithreadResult.cpp" />
+    <ClCompile Include="..\..\src\MultithreadTask.cpp" />
     <ClCompile Include="..\..\src\StandardProcessor.cpp" />
     <ClCompile Include="..\..\src\StandardResult.cpp" />
     <ClCompile Include="..\..\src\StandardValidator.cpp" />
