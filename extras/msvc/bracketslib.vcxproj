@@ -39,7 +39,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(BOOST);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(BOOST);$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -47,8 +52,9 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../inc;../../src</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -64,8 +70,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../inc;../../src</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -76,24 +83,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\BracketPuzzle\IInputReader.hpp" />
-    <ClInclude Include="..\..\inc\BracketPuzzle\IOutputWriter.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\IResult.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\IResultWriter.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\IProcessor.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\IValidator.hpp" />
-    <ClInclude Include="..\..\inc\BracketPuzzle\NonAssignable.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\MultithreadProcessor.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\StandardProcessor.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\StandardValidator.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\StreamInputReader.hpp" />
-    <ClInclude Include="..\..\inc\BracketPuzzle\StreamOutputWriter.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\StreamResultWriter.hpp" />
     <ClInclude Include="..\..\inc\BracketPuzzle\VectorInputReader.hpp" />
-    <ClInclude Include="..\..\inc\BracketPuzzle\VectorOutputWriter.hpp" />
+    <ClInclude Include="..\..\inc\BracketPuzzle\VectorResultWriter.hpp" />
+    <ClInclude Include="..\..\src\BracketPuzzle\MultithreadResult.hpp" />
+    <ClInclude Include="..\..\src\BracketPuzzle\MultithreadTask.hpp" />
+    <ClInclude Include="..\..\src\BracketPuzzle\StandardResult.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\IResult.cpp" />
+    <ClCompile Include="..\..\src\MultithreadProcessor.cpp" />
+    <ClCompile Include="..\..\src\MultithreadResult.cpp" />
+    <ClCompile Include="..\..\src\MultithreadTask.cpp" />
     <ClCompile Include="..\..\src\StandardProcessor.cpp" />
+    <ClCompile Include="..\..\src\StandardResult.cpp" />
     <ClCompile Include="..\..\src\StandardValidator.cpp" />
     <ClCompile Include="..\..\src\StreamInputReader.cpp" />
-    <ClCompile Include="..\..\src\StreamOutputWriter.cpp" />
+    <ClCompile Include="..\..\src\StreamResultWriter.cpp" />
     <ClCompile Include="..\..\src\VectorInputReader.cpp" />
-    <ClCompile Include="..\..\src\VectorOutputWriter.cpp" />
+    <ClCompile Include="..\..\src\VectorResultWriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

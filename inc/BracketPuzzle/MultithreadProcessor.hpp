@@ -1,14 +1,14 @@
 /**
     @file
 
-    The standard string processor (interface).
+    The multi threaded string processor (interface).
 
     @author Emil Maskovsky
 */
 
 
-#ifndef BRACKETS_PUZZLE_STANDARD_PROCESSOR_HPP_2001410251753
-#define BRACKETS_PUZZLE_STANDARD_PROCESSOR_HPP_2001410251753
+#ifndef BRACKETS_PUZZLE_MULTITHREAD_PROCESSOR_HPP_2001410271034
+#define BRACKETS_PUZZLE_MULTITHREAD_PROCESSOR_HPP_2001410271034
 
 // BracketPuzzle
 #include "BracketPuzzle/IProcessor.hpp"
@@ -19,9 +19,9 @@ namespace BracketPuzzle
 
 
 /**
-    The standard string processor.
+    The multi threaded string processor.
 */
-class StandardProcessor
+class MultithreadProcessor
     : public IProcessor
 {
 
@@ -34,12 +34,12 @@ public:
         const IInputReader & reader,
         IResultWriter & writer) const;
 
-}; // class StandardProcessor
+}; // class MultithreadProcessor
 
 
 } // namespace BracketPuzzle
 
 
-#endif // BRACKETS_PUZZLE_STANDARD_PROCESSOR_HPP_2001410251753
+#endif // BRACKETS_PUZZLE_MULTITHREAD_PROCESSOR_HPP_2001410271034
 
 /* EOF */

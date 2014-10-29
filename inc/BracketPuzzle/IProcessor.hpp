@@ -16,7 +16,7 @@ namespace BracketPuzzle
 
 // forward declarations
 class IInputReader;
-class IOutputWriter;
+class IResultWriter;
 class IValidator;
 
 
@@ -52,7 +52,7 @@ public:
     virtual bool execute(
         const IValidator & validator,
         const IInputReader & reader,
-        IOutputWriter & writer) const = 0;
+        IResultWriter & writer) const = 0;
 
 }; // class IProcessor
 

@@ -13,7 +13,8 @@
 #include "BracketPuzzle/StandardProcessor.hpp"
 #include "BracketPuzzle/IValidator.hpp"
 #include "BracketPuzzle/IInputReader.hpp"
-#include "BracketPuzzle/IOutputWriter.hpp"
+#include "BracketPuzzle/IResultWriter.hpp"
+#include "BracketPuzzle/StandardResult.hpp"
 
 
 namespace BracketPuzzle
@@ -23,7 +24,7 @@ namespace BracketPuzzle
 bool StandardProcessor::execute(
     const IValidator & validator,
     const IInputReader & reader,
-    IOutputWriter & writer) const
+    IResultWriter & writer) const
 {
     bool ok = true;
     std::string line;
@@ -36,10 +37,8 @@ bool StandardProcessor::execute(
          it != lines.end() && ok;
          ++it)
     {
-        ok = writer.writeLine(
-            validator.validate(*it)
-            ? "True"
-            : "False");
+        ok = writer.writeResult(
+            StandardResult(validator.validate(*it)));
     }
     return ok;
 }
