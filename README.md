@@ -80,6 +80,12 @@ Boost libraries need to be available and built. Refer to the
 [Boost manual](http://www.boost.org/doc/libs/1_56_0/more/getting_started/windows.html "Boost: Getting Started on Windows")
 for the information on how to obtain and build the Boost library.
 
+The Boost libraries must be build in complete mode to also build dynamic
+libraries (which are used by the test project), like this:
+```
+b2 --build-type=complete
+```
+
 In order to find the Boost headers and libraries, the environment variable
 "BOOST" must point to the Boost root directory - the environment
 variable is used in the setup of the MSVC projects to determine the appropriate

@@ -67,7 +67,7 @@
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(TargetPath)</Command>
+      <Command>$(TargetPath) --log_level=test_suite</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Unit test</Message>
@@ -95,7 +95,7 @@
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(TargetPath)</Command>
+      <Command>$(TargetPath) --log_level=test_suite</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Unit test</Message>
