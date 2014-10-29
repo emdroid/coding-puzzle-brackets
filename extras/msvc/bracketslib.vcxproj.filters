@@ -24,9 +24,6 @@
     <ClInclude Include="..\..\inc\BracketPuzzle\IValidator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\BracketPuzzle\NonAssignable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\inc\BracketPuzzle\StandardProcessor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

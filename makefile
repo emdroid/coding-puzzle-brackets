@@ -41,6 +41,10 @@ OBJS_TARGET = \
 OBJS_TARGET_MT = \
 	$(TARGET_MT).o
 
+# libraries linked within the executables
+LIBS = \
+	-lboost_thread-mt
+
 # the unit test executable object files
 OBJS_TEST = $(OBJS) \
 	$(TEST_TARGET).o
@@ -77,13 +81,13 @@ cleanall: clean
 	-rm -f $(TARGET) $(TARGET_MT)
 
 $(TARGET): $(OBJS) $(OBJS_TARGET)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 $(TARGET_MT): $(OBJS) $(OBJS_TARGET_MT)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 $(TEST_TARGET): $(OBJS) $(OBJS_TEST)
-	$(CXX) $(LDFLAGS) -o $@ $^
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 .cpp.o:
 	$(CXX) -c $(CPPFLAGS) -o $@ $<

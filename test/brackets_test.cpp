@@ -13,6 +13,9 @@
 #include <sstream>
 #include <memory>
 
+// Boost
+#include <boost/exception/diagnostic_information.hpp>
+
 // BracketPuzzle
 #include "BracketPuzzle/StandardProcessor.hpp"
 #include "BracketPuzzle/MultithreadProcessor.hpp"
@@ -252,12 +255,22 @@ int main()
             result = EXIT_FAILURE;
         }
     }
+    catch (const boost::exception & e)
+    {
+        std::cerr << boost::diagnostic_information(e) << std::endl;
+        result = EXIT_FAILURE;
+    }
     catch (const std::exception & e)
     {
         std::cerr << std::endl
                   << "FAILURE: Exception caught!" << std::endl
                   << "Message: " << e.what() << std::endl;
-
+        result = EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        std::cerr << std::endl
+                  << "FAILURE: Unknown exception caught!" << std::endl;
         result = EXIT_FAILURE;
     }
 
