@@ -47,6 +47,10 @@ LIBS = \
 	-lboost_thread-mt \
 	-lboost_system-mt
 
+# libraries linked within the test executables
+LIBS_TEST = \
+	-lboost_unit_test_framework-mt
+
 # the unit test executable object files
 OBJS_TEST = $(OBJS) \
 	$(TEST_TARGET).o
@@ -74,7 +78,7 @@ VPATH = src:client:test
 all: $(TARGET) $(TARGET_MT)
 
 test: all $(TEST_TARGET)
-	./$(TEST_TARGET)
+	./$(TEST_TARGET) --log_level=test_suite
 
 clean:
 	-rm -f $(OBJS) $(OBJS_TARGET) $(OBJS_TEST) $(OBJS:.o=.d) $(OBJS_TARGET:.o=.d) $(OBJS_TARGET_MT:.o=.d) $(OBJS_TEST:.o=.d) $(TEST_TARGET)
@@ -89,7 +93,7 @@ $(TARGET_MT): $(OBJS) $(OBJS_TARGET_MT)
 	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 $(TEST_TARGET): $(OBJS) $(OBJS_TEST)
-	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS)
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS) $(LIBS_TEST)
 
 .cpp.o:
 	$(CXX) -c $(CPPFLAGS) -o $@ $<

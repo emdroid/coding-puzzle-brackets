@@ -15,16 +15,184 @@
 
 // Boost
 #include <boost/exception/diagnostic_information.hpp>
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE  Master
+#include <boost/test/unit_test.hpp>
 
 // BracketPuzzle
 #include "BracketPuzzle/StandardProcessor.hpp"
 #include "BracketPuzzle/MultithreadProcessor.hpp"
 #include "BracketPuzzle/StandardValidator.hpp"
+#include "BracketPuzzle/StreamInputReader.hpp"
+#include "BracketPuzzle/StreamResultWriter.hpp"
 #include "BracketPuzzle/VectorInputReader.hpp"
 #include "BracketPuzzle/VectorResultWriter.hpp"
 #include "BracketPuzzle/StandardResult.hpp"
 #include "BracketPuzzle/MultithreadResult.hpp"
 using namespace BracketPuzzle;
+
+
+BOOST_AUTO_TEST_SUITE(InputReader)
+
+
+BOOST_AUTO_TEST_CASE(StreamInputReaderTest)
+{
+    std::istringstream input("Line1\nLine2\n");
+    StreamInputReader reader(input);
+
+    std::string line;
+
+    // the first line
+    BOOST_CHECK(reader.readLine(line));
+    BOOST_CHECK_EQUAL(line, "Line1");
+    // the second line
+    BOOST_CHECK(reader.readLine(line));
+    BOOST_CHECK_EQUAL(line, "Line2");
+}
+
+
+BOOST_AUTO_TEST_CASE(VectorInputReaderTest)
+{
+    VectorInputReader reader;
+    reader.insert("Line1");
+    reader.insert("Line2");
+
+    std::string line;
+
+    // the first line
+    BOOST_CHECK(reader.readLine(line));
+    BOOST_CHECK_EQUAL(line, "Line1");
+    // the second line
+    BOOST_CHECK(reader.readLine(line));
+    BOOST_CHECK_EQUAL(line, "Line2");
+}
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(Result)
+
+
+BOOST_AUTO_TEST_CASE(StandardResultTest)
+{
+    StandardResult result1(true);
+    StandardResult result2(true);
+    StandardResult result3(false);
+
+    BOOST_CHECK(result1.isEqual(result2));
+    BOOST_CHECK(result2.isEqual(result1));
+    BOOST_CHECK(!result1.isEqual(result3));
+    BOOST_CHECK(!result3.isEqual(result2));
+    BOOST_CHECK(!result1.isLesserThan(result2));
+    BOOST_CHECK(!result2.isLesserThan(result1));
+    BOOST_CHECK(!result1.isLesserThan(result3));
+    BOOST_CHECK(result3.isLesserThan(result1));
+}
+
+
+BOOST_AUTO_TEST_CASE(MultithreadResultTest)
+{
+    MultithreadResult result1(0, true);
+    MultithreadResult result2(0, true);
+    MultithreadResult result3(1, false);
+
+    BOOST_CHECK(result1.isEqual(result2));
+    BOOST_CHECK(result2.isEqual(result1));
+    BOOST_CHECK(!result1.isEqual(result3));
+    BOOST_CHECK(!result3.isEqual(result2));
+    BOOST_CHECK(!result1.isLesserThan(result2));
+    BOOST_CHECK(!result2.isLesserThan(result1));
+    BOOST_CHECK(result1.isLesserThan(result3));
+    BOOST_CHECK(!result3.isLesserThan(result1));
+}
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(ResultWriter)
+
+
+BOOST_AUTO_TEST_CASE(StreamResultWriterTest)
+{
+    std::ostringstream out;
+    StreamResultWriter writer(out);
+
+    BOOST_CHECK(writer.writeResult(StandardResult(false)));
+    BOOST_CHECK_EQUAL(out.str(), "False\n");
+    BOOST_CHECK(writer.writeResult(StandardResult(true)));
+    BOOST_CHECK_EQUAL(out.str(), "False\nTrue\n");
+    BOOST_CHECK(writer.writeResult(MultithreadResult(5, true)));
+    BOOST_CHECK_EQUAL(out.str(), "False\nTrue\n5:True\n");
+}
+
+
+BOOST_AUTO_TEST_CASE(VectorResultWriterTest)
+{
+    VectorResultWriter writer;
+
+    BOOST_CHECK(writer.writeResult(StandardResult(true)));
+    BOOST_CHECK_EQUAL(writer.getData().size(), 1u);
+    BOOST_CHECK(writer.getData()[0]->isEqual(StandardResult(true)));
+
+    BOOST_CHECK(writer.writeResult(StandardResult(false)));
+    BOOST_CHECK_EQUAL(writer.getData().size(), 2u);
+    BOOST_CHECK(writer.getData()[0]->isEqual(StandardResult(true)));
+    BOOST_CHECK(writer.getData()[1]->isEqual(StandardResult(false)));
+
+    BOOST_CHECK(writer.writeResult(MultithreadResult(8, false)));
+    BOOST_CHECK_EQUAL(writer.getData().size(), 3u);
+    BOOST_CHECK(writer.getData()[0]->isEqual(StandardResult(true)));
+    BOOST_CHECK(writer.getData()[1]->isEqual(StandardResult(false)));
+    BOOST_CHECK(writer.getData()[2]->isEqual(MultithreadResult(8, false)));
+}
+
+
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_AUTO_TEST_SUITE(Validator)
+
+
+BOOST_AUTO_TEST_CASE(StandardValidatorTest)
+{
+    StandardValidator validator;
+
+    BOOST_CHECK(!validator.validate(""));
+    BOOST_CHECK(!validator.validate("a"));
+    BOOST_CHECK(!validator.validate(""));
+    BOOST_CHECK(!validator.validate("a"));
+    BOOST_CHECK(!validator.validate(" "));
+    BOOST_CHECK(!validator.validate("("));
+    BOOST_CHECK(!validator.validate(")"));
+    BOOST_CHECK(validator.validate("()"));
+    BOOST_CHECK(!validator.validate("(()"));
+    BOOST_CHECK(!validator.validate("()("));
+    BOOST_CHECK(!validator.validate("())"));
+    BOOST_CHECK(!validator.validate("( )"));
+    BOOST_CHECK(!validator.validate("()_"));
+    BOOST_CHECK(validator.validate("[]"));
+    BOOST_CHECK(validator.validate("{}"));
+    BOOST_CHECK(!validator.validate("({)}"));
+    BOOST_CHECK(validator.validate("({})"));
+    BOOST_CHECK(!validator.validate("([])"));
+    BOOST_CHECK(!validator.validate("(())"));
+    BOOST_CHECK(validator.validate("{[]}"));
+    BOOST_CHECK(!validator.validate("{()}"));
+    BOOST_CHECK(!validator.validate("{{}}"));
+    BOOST_CHECK(validator.validate("[()]"));
+    BOOST_CHECK(validator.validate("[{}]"));
+    BOOST_CHECK(validator.validate("[[]]"));
+    BOOST_CHECK(validator.validate("[[[]]]"));
+    BOOST_CHECK(!validator.validate("[([])]"));
+    BOOST_CHECK(validator.validate("[()()]"));
+    BOOST_CHECK(validator.validate("{[][()()]}"));
+    BOOST_CHECK(validator.validate("()()"));
+}
+
+
+BOOST_AUTO_TEST_SUITE_END()
 
 
 namespace
@@ -42,7 +210,7 @@ public:
     {
     }
 
-    virtual bool check(
+    virtual void check(
         const std::vector< TaskSetup > & tasks,
         const VectorResultWriter::ValuesType & results) const = 0;
 
@@ -57,45 +225,22 @@ public:
 
     /* The IResultValidator interface */
 
-    bool check(
+    void check(
         const std::vector< TaskSetup > & tasks,
         const VectorResultWriter::ValuesType & results) const
     {
-        bool ok = true;
         for (size_t i = 0; i < tasks.size() && i < results.size(); ++i)
         {
             const StandardResult expected(tasks[i].second);
-            if (!expected.isEqual(*results[i]))
-            {
-                std::cerr << "Test failure: Input: \""
-                          << tasks[i].first
-                          << "\", expected: \"" << expected
-                          << "\", received: \"" << *results[i] << "\""
-                          << std::endl;
-                ok = false;
-            }
+            BOOST_CHECK_MESSAGE(expected.isEqual(*results[i]),
+                "input: \"" << tasks[i].first
+                            << "\", expected: \"" << expected
+                            << "\", received: \"" << *results[i] << "\"");
         }
-        if (tasks.size() < results.size())
-        {
-            std::cerr << "Test failure: Extra data in the output" << std::endl;
-            ok = false;
-        }
-        else if (tasks.size() > results.size())
-        {
-            std::cerr << "Test failure: Missing data in the output"
-                      << std::endl;
-            ok = false;
-        }
-        return ok;
+        BOOST_CHECK_EQUAL(tasks.size(), results.size());
     }
 
 };
-
-
-bool ConstResultPtrLesserThan(ConstResultPtr left, ConstResultPtr right)
-{
-    return *left < *right;
-}
 
 
 class MultithreadResultValidator
@@ -106,11 +251,10 @@ public:
 
     /* The IResultValidator interface */
 
-    bool check(
+    void check(
         const std::vector< TaskSetup > & tasks,
         const VectorResultWriter::ValuesType & results) const
     {
-        bool ok = true;
         // need to sort the results first - can come out of order
         // from different threads
         VectorResultWriter::ValuesType sortedResults = results;
@@ -123,28 +267,20 @@ public:
              ++i)
         {
             const MultithreadResult expected(i, tasks[i].second);
-            if (!expected.isEqual(*sortedResults[i]))
-            {
-                std::cerr << "Test failure: Input: \""
-                          << tasks[i].first
-                          << "\", expected: \"" << expected
-                          << "\", received: \"" << *sortedResults[i] << "\""
-                          << std::endl;
-                ok = false;
-            }
+            BOOST_CHECK_MESSAGE(expected.isEqual(*sortedResults[i]),
+                "input: \"" << tasks[i].first
+                            << "\", expected: \"" << expected
+                            << "\", received: \"" << *sortedResults[i] << "\"");
         }
-        if (tasks.size() < results.size())
-        {
-            std::cerr << "Test failure: Extra data in the output" << std::endl;
-            ok = false;
-        }
-        else if (tasks.size() > results.size())
-        {
-            std::cerr << "Test failure: Missing data in the output"
-                      << std::endl;
-            ok = false;
-        }
-        return ok;
+        BOOST_CHECK_EQUAL(tasks.size(), results.size());
+    }
+
+private:
+
+    static bool ConstResultPtrLesserThan(ConstResultPtr left,
+        ConstResultPtr right)
+    {
+        return *left < *right;
     }
 
 };
@@ -171,11 +307,11 @@ public:
         }
     }
 
-    bool check(
+    void check(
         const VectorResultWriter & writer,
         const IResultValidator & resultValidator)
     {
-        return resultValidator.check(m_tasks, writer.getData());
+        resultValidator.check(m_tasks, writer.getData());
     }
 
 private:
@@ -185,7 +321,7 @@ private:
 }; // class ProcessingTestSetup
 
 
-bool testProcessing(
+void testProcessing(
     const IProcessor & processor,
     const IResultValidator & resultValidator)
 {
@@ -225,57 +361,33 @@ bool testProcessing(
 
     setup.configure(reader);
     processor.execute(validator, reader, writer);
-    return setup.check(writer, resultValidator);
+    setup.check(writer, resultValidator);
 }
 
 
 }
 
 
-int main()
+BOOST_AUTO_TEST_SUITE(Processing)
+
+
+BOOST_AUTO_TEST_CASE(StandardProcessorTest)
 {
-    int result = EXIT_SUCCESS;
-
-    try
-    {
-        std::cout << "Running the [Bracket processor] unit test" << std::endl
-                  << "=========================================" << std::endl;
-
-        if (!testProcessing(
-                StandardProcessor(),
-                StandardResultValidator()))
-        {
-            result = EXIT_FAILURE;
-        }
-
-        if (!testProcessing(
-                MultithreadProcessor(),
-                MultithreadResultValidator()))
-        {
-            result = EXIT_FAILURE;
-        }
-    }
-    catch (const boost::exception & e)
-    {
-        std::cerr << boost::diagnostic_information(e) << std::endl;
-        result = EXIT_FAILURE;
-    }
-    catch (const std::exception & e)
-    {
-        std::cerr << std::endl
-                  << "FAILURE: Exception caught!" << std::endl
-                  << "Message: " << e.what() << std::endl;
-        result = EXIT_FAILURE;
-    }
-    catch (...)
-    {
-        std::cerr << std::endl
-                  << "FAILURE: Unknown exception caught!" << std::endl;
-        result = EXIT_FAILURE;
-    }
-
-    return result;
+    testProcessing(
+        StandardProcessor(),
+        StandardResultValidator());
 }
+
+
+BOOST_AUTO_TEST_CASE(MultithreadProcessorTest)
+{
+    testProcessing(
+        MultithreadProcessor(),
+        MultithreadResultValidator());
+}
+
+
+BOOST_AUTO_TEST_SUITE_END()
 
 
 /* EOF */
