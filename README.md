@@ -25,8 +25,8 @@ it is well-formed or not by applying the following rules:
 * **An empty string is not valid a expression**
 * **Any other characters than (){}[] will invalidate the string**
 
-For a given string print out True if the string is well-formed or
-False if otherwise.
+For a given string print out ``True`` if the string is well-formed or
+``False`` if otherwise.
 
 Part I.)
 --------
@@ -43,8 +43,10 @@ the machine has cores. Because the order is not necessarily the same
 as the input provide the output with the referring index of the nth
 input like this (no spaces):
 
+```
 0:True 
 1:False
+```
 
 
 Usage
@@ -68,7 +70,7 @@ make test
 The program uses Boost libraries, therefore they must be installed first.
 For example, under Ubuntu the Boost libraries can be installed by:
 ```
-sudo apt-get install libboost-dev
+sudo apt-get install libboost-all-dev
 ```
 
 ### Windows
@@ -107,8 +109,10 @@ brackets_mt
 ```
 
 After starting the application, enter the input lines (use Enter to terminate
-a single line). To start processing the entered lines, press Ctrl+Z, Enter
-to finish receiving the input and start processing the lines.
+a single line).
+
+To finish receiving the input and start processing the entered lines, press:
+Ctrl+Z (under Windows) or Ctrl+D (under Linux).
 
 The input can also be redirected to receive the lines from a file:
 ```
