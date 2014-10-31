@@ -81,7 +81,7 @@ test: all $(TEST_TARGET)
 	./$(TEST_TARGET) --log_level=test_suite
 
 clean:
-	-rm -f $(OBJS) $(OBJS_TARGET) $(OBJS_TEST) $(OBJS:.o=.d) $(OBJS_TARGET:.o=.d) $(OBJS_TARGET_MT:.o=.d) $(OBJS_TEST:.o=.d) $(TEST_TARGET)
+	-rm -f $(OBJS) $(OBJS_TARGET) $(OBJS_TARGET_MT) $(OBJS_TEST) $(OBJS:.o=.d) $(OBJS_TARGET:.o=.d) $(OBJS_TARGET_MT:.o=.d) $(OBJS_TEST:.o=.d) $(TEST_TARGET)
 
 cleanall: clean
 	-rm -f $(TARGET) $(TARGET_MT)
