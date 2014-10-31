@@ -60,7 +60,7 @@ OPTFLAGS = -g -O0 -fno-inline
 #OPTFLAGS = -O2 -DNDEBUG
 
 # the compiler flags
-CPPFLAGS = $(OPTFLAGS) -std=c++0x -Wall -Wextra -Werror -I inc -I src
+CPPFLAGS = $(OPTFLAGS) -std=c++0x -Wall -Wextra -Werror -I inc -I src -I client
 
 # the linker flags
 LDFLAGS = $(OPTFLAGS)
