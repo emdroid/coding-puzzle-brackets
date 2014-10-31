@@ -1,7 +1,7 @@
 /**
     @file
 
-    Brackets processor unit test test.
+    Brackets coding puzzle unit tests.
 
     @author Emil Maskovsky
 */
@@ -14,7 +14,6 @@
 #include <memory>
 
 // Boost
-#include <boost/exception/diagnostic_information.hpp>
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE  Master
 #include <boost/test/unit_test.hpp>
